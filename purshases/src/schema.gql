@@ -2,6 +2,51 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Product {
+  id: ID!
+  title: String!
+  slug: String!
+}
+
+type Purshase {
+  id: ID!
+  status: PurshaseStatus!
+  createdAt: DateTime!
+  product: Product!
+}
+
+"""Available purshase statuses"""
+enum PurshaseStatus {
+  PENDING
+  APPROVED
+  FAILED
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Customer {
+  id: ID!
+  purshases: [Purshase!]!
+}
+
 type Query {
-  hello: String!
+  products: [Product!]!
+  purshases: [Purshase!]!
+  me: Customer!
+}
+
+type Mutation {
+  createProduct(data: CreateProductInput!): Product!
+  createPurshase(data: CreatePurshaseInput!): Purshase!
+}
+
+input CreateProductInput {
+  title: String!
+}
+
+input CreatePurshaseInput {
+  productId: String!
 }
